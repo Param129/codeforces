@@ -8,15 +8,15 @@ int main(){
         string s;
         cin>>s;
 
-        int n=s.size();
-        int prev=0;
-        int ans=0;
-        for(int i=0;i<n;i++){
+        long long n=s.size();
+        long long prev=0;
+        long long ans=0;
+        for(long long i=0;i<n;i++){
             if(s[i]=='1'){
                 prev++;
             }
             else{
-                if(prev>0)ans+=prev+1;
+                if(prev>0)ans+=(prev+1);
             }
         }
 
