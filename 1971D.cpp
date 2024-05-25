@@ -9,14 +9,14 @@ int main(){
         cin>>s;
 
         
-        int cut=0;
+        int cut=1;
         for(int i=0;i<s.size()-1;i++){
-            if(s[i]=='1' && s[i+1]=='0'){
+            if(s[i]!=s[i+1]){
                 cut++;
             }
         }
-
-        cout<<cut+1<<endl;
+        if(s.find("01")!=-1)cut--;
+        cout<<cut<<endl;
     }
 return 0;
 }
