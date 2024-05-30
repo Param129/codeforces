@@ -27,8 +27,8 @@ int main(){
                 break;
             }
 
-            int tominus=min(x,i);
-            int sum=(pre[i-tominus]-(pre[i]-pre[i-tominus]));
+            int upto=min(x,i);
+            int sum=(pre[i-upto]-(pre[i]-pre[i-upto]));
             ans=max(ans,sum);
         }
 
