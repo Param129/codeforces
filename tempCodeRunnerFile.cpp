@@ -7,26 +7,36 @@ int main(){
     while(t--){
         int n;
         cin>>n;
-        string s1,s2;
-        cin>>s1>>s2;
 
-        int c1=0;
-        int c2=0;
+        vector<int>a(n+1,0);
+        vector<int>b(n+1);
 
         for(int i=0;i<n;i++){
-            if(s1[i]=='1')c1++;
-            if(s2[i]=='1')c2++;
+            cin>>a[i];
         }
 
-        int op=c1-c2>0?c1-c2:0;
+        for(int j=0;j<n+1;j++){
+            cin>>b[j];
+        }
 
-        int replace=0;
-        int insert=0;
+        int el=0;
+        int x=b[n];
+        int mn=INT_MAX;
+
         for(int i=0;i<n;i++){
-            if(s2[i]=='0' && s1[i]=='1')rep++;
-            else if(s1[i]=='0' && s2[i]=='1')insert++;
+            if(abs(x-a[i])<mn){
+                mn=abs(x-a[i]);
+                el=a[i];
+            }
         }
-        cout<<op+insert-replace<<endl;
+
+        a[n]=el;
+        cout<<el;
+        int ans=0;
+        for(int i=0;i<n+1;i++){
+            ans+=abs(a[i]-b[i]);
+        }
+        // cout<<ans<<endl;
     }
 return 0;
 }
