@@ -5,38 +5,42 @@ int main(){
     int t;
     cin>>t;
     while(t--){
-        int n;
-        cin>>n;
+        int n,m;
+        cin>>n>>m;
 
-        vector<int>a(n+1,0);
-        vector<int>b(n+1);
+        vector<int>a(n),b(m);
 
         for(int i=0;i<n;i++){
             cin>>a[i];
         }
 
-        for(int j=0;j<n+1;j++){
+        for(int j=0;j<m;j++){
             cin>>b[j];
         }
 
-        int el=0;
-        int x=b[n];
-        int mn=INT_MAX;
+        sort(a.begin(),a.end());
+        sort(b.begin(),b.end());
 
-        for(int i=0;i<n;i++){
-            if(abs(x-a[i])<mn){
-                mn=abs(x-a[i]);
-                el=a[i];
-            }
+        vector<int>c(a);
+
+        int j=m-1;
+        for(int i=0;i<=n/2;i++){
+            c[i]=b[j];
+            j--;
         }
 
-        a[n]=el;
-        cout<<el;
+        j=0;
+        for(int i=n;i>n/2;i--){
+            c[i]=b[j];
+            j++;
+        }
+
         int ans=0;
-        for(int i=0;i<n+1;i++){
-            ans+=abs(a[i]-b[i]);
+        for(int i=0;i<n;i++){
+            ans+=abs(a[i]-c[i]);
         }
-        // cout<<ans<<endl;
+
+        cout<<ans<<endl;
     }
 return 0;
 }
