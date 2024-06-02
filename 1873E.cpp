@@ -29,7 +29,7 @@ int main() {
             }
 
             if (water <= x) {
-                ans = mid; // Update the answer
+                ans = mid; // Update the answer1889A.cpp
                 l = mid + 1; // Try for a higher height
             } else {
                 h = mid - 1; // Try for a lower height
