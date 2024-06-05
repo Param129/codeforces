@@ -1,67 +1,25 @@
-#include <iostream>
-#include <vector>
-#include <set>
-#include <map>
-#include <algorithm>
-#include <cmath>
-using namespace std;
-
-#define int long long
-typedef pair<int, int> II;
-typedef vector<II> VII;
-typedef vector<int> VI;
-typedef vector<VI> VVI;
-
-
-signed main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    int t;
-    cin >> t;
-    while (t--) {
-            int n;
-    cin >> n;
-    vector<int> a(n);
-    for (int i = 0; i < n; ++i) {
-        cin >> a[i];
-    }
-    vector<int> b(n);
-
-    set<int> store;
-    for (int i = 0; i < n; ++i) {
-        cin >> b[i];
-        store.insert(b[i]);
-    }
-    map<int, int> maput;
-    for (int i = 0; i < n; ++i) {
-        if (a[i] != b[i])
-            maput[b[i]]++;
-    }
-
-    int m;
-    cin >> m;
-    bool found = false;
-    for (int i = 0; i < m; ++i) {
-        int ele;
-        cin >> ele;
-        if (maput.find(ele) != maput.end()) {
-            maput[ele]--;
-            if (maput[ele] == 0)
-                maput.erase(ele);
-            if (i == m - 1)
-                found = true;
-        } else if (store.count(ele)) {
-            if (i == m - 1)
-                found = true;
+ '1's
+        bool all_zero = true;
+        bool all_one = true;
+        
+        for (char c : s) {
+            if (c != '0') all_zero = false;
+            if (c != '1') all_one = false;
         }
-    }
 
-    if (found && maput.empty()) {
-        cout << "YES"<<endl;
-    } else
-        cout << "NO"<<endl;
+        if (all_zero) {
+            cout << 1 << endl;
+        } else if (all_one) {
+            cout << 0 << endl;
+        } else {
+            // If the string contains both '0's and '1's
+            int count_01 = 0;
+            int count_10 = 0;
 
-    }
-    return 0;
-}
+            for (int i = 1; i < s.size(); ++i) {
+                if (s[i-1] == '0' && s[i] == '1') count_01++;
+                if (s[i-1] == '1' && s[i] == '0') count_10++;
+            }
+
+            // Minimum number of segments needed to cover all transitions
+            int transitions = (count_01+
