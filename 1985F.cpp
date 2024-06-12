@@ -1,57 +1,69 @@
 #include <iostream>
 #include <vector>
-#include <climits>
-
+#include <queue>
 using namespace std;
 
 struct Attack {
-    int damage;
-    int cooldown;
+    long long damage;
+    long long cooldown;
+    long long nextTurn;
+
+    bool operator<(const Attack& other) const {
+        return nextTurn > other.nextTurn; // Min-heap based on nextTurn
+    }
 };
 
-vector<int> dp;
+long long minTurnsToBeatBoss(long long health, vector<Attack>& attacks) {
+    priority_queue<Attack> pq;
+    long long turns = 0;
 
-int minTurns(int health, vector<Attack>& attacks) {
-    if (health <= 0) return 0;
-    if (dp[health] != -1) return dp[health];
-    
-    int min_turns = INT_MAX;
-    for (auto& attack : attacks) {
-        if (attack.damage >= health) {
-            min_turns = min(min_turns, 1);
-        } else {
-            int next_health = health - attack.damage;
-            int next_turns = minTurns(next_health, attacks);
-            next_turns += attack.cooldown;
-            min_turns = min(min_turns, next_turns);
-        }
+    for (Attack& attack : attacks) {
+        attack.nextTurn = 0;
+        pq.push(attack);
     }
-    
-    return dp[health] = min_turns;
+
+    while (health > 0) {
+        if (pq.empty()) {
+            // If no attacks available and boss still has health, return -1 (impossible)
+            return -1;
+        }
+
+        Attack attack = pq.top();
+        pq.pop();
+
+        if (attack.nextTurn > turns) {
+            // Skip to next turn if attack is on cooldown
+            turns = attack.nextTurn;
+        } else {
+            // Perform the attack and update the next turn
+            health -= attack.damage;
+            attack.nextTurn = turns + attack.cooldown;
+            pq.push(attack);
+        }
+        
+        turns++;
+    }
+
+    return turns;
 }
 
 int main() {
-    int t;
+    long long t;
     cin >> t;
 
-    for (int i = 0; i < t; ++i) {
-        int h, n;
+    while (t--) {
+        long long h, n;
         cin >> h >> n;
-        
-        vector<Attack> attacks(n);
-        for (int j = 0; j < n; ++j) {
-            cin >> attacks[j].damage;
-        }
-        for (int j = 0; j < n; ++j) {
-            cin >> attacks[j].cooldown;
-        }
-        
-        // Initialize DP array with -1
-        dp.assign(h + 1, -1);
 
-        // Calculate minimum turns for this test case
-        int turns = minTurns(h, attacks);
-        cout << turns << endl;
+        vector<Attack> attacks(n);
+        for (long long i = 0; i < n; ++i) {
+            cin >> attacks[i].damage;
+        }
+        for (long long i = 0; i < n; ++i) {
+            cin >> attacks[i].cooldown;
+        }
+
+        cout << minTurnsToBeatBoss(h, attacks) << endl;
     }
 
     return 0;
