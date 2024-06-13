@@ -11,7 +11,7 @@ int main(){
 
         for(long long i = 0; i < n; i++){
             cin >> v[i];
-        }
+        }1800
 
         long long ans = LLONG_MAX;
         
