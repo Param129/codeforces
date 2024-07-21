@@ -4,40 +4,44 @@
 #include <numeric>
 using namespace std;
 
+long long sumN(long long n){
+    return 1LL *n * (n+1)/2;
+}
+
 int main() {
-    int t;
+    long long t;
     cin >> t;
     
     while (t--) {
-        int n;
+        long long n;
         cin >> n;
         
-        vector<int> a(n);
-        for (int i = 0; i < n; ++i) {
+        vector<long long> a(n);
+        for (long long i = 0; i < n; ++i) {
             cin >> a[i];
         }
         
-        int sum = 0;
-        bool allZero = false;
+        long long sum = 0;
         
-        while (!allZero) {
-            int currentSum = accumulate(a.begin(), a.end(), 0); // Calculate current sum of array a
-            sum += currentSum;
-            
-            unordered_map<int, int> mp;
-            int mx = 0;
-            allZero = true;
-            
-            for (int i = 0; i < n; ++i) {
-                if (a[i] > 0) {
-                    allZero = false;
-                    mp[a[i]]++;
-                    if (mp[a[i]] >= 2) {
-                        mx = max(mx, a[i]);
-                    }
-                    a[i] = mx; 
+        long long st=0;
+        for(long long j=0;j<2;j++){
+            long long mx=0;
+            unordered_map<long long,long long>mp;
+            for(long long i=0;i<n;i++){
+                sum+=a[i];
+                mp[a[i]]++;
+                if(mp[a[i]]>=2){
+                    mx=max(mx,a[i]);
                 }
+                a[i]=mx;
             }
+        }
+
+
+       
+
+        for(long long i=0;i<n;i++){
+            sum+=(n-i)*a[i];
         }
         
         cout << sum << endl;
