@@ -196,67 +196,50 @@ void quickSort(vector<int>& arr, int low, int high) {
     }
 }
 
-#define int long long
 
-signed main(){
-    int t;
-    cin>>t;
-    while(t--){
-        int n;
-        int m;
-        cin>>n>>m;
 
-        vector<int>a(n),b(n);
-        for(int i=0;i<n;i++){
-            cin>>a[i];
-        }
-        for(int i=0;i<n;i++){
-            cin>>b[i];
-        }
-
-        map<int,int>mp;
-        for(int i=0;i<n;i++){
-            mp[a[i]]=b[i];
-        }
-
-        int ans=0;
-        for(auto it=mp.begin();it!=mp.end();it++){
-            int key=it->first;
-            int c1=it->second;
-            int c2=0;
-
-            auto next=it;
-            next++;
-
-            if(next->first!=key+1){
-                next=mp.end();
-            }
-            if(next!=mp.end()){
-                c2=next->second;
-            }
-
-            int take1=min(c1,m/key);
-            int rem= m - take1*key;
-            int take2=0;
-
-            if(next!=mp.end()){
-                take2=min(c2,rem/(next->first));
-            }
-
-            ans=max(ans,take1*key+take2*(next->first));
-
-            if(take1>0 && next!=mp.end()){
-                int left=c2-take2;
-                int leftmoney=rem-take2*(next->first);
-                int mayrem=min(left,min(take1,leftmoney));
-                take1-=mayrem;
-                take2+=mayrem;
-
-                ans=max(ans,take1*key+take2*(next->first));
-            }
-        }
-
-        cout<<ans<<endl;
+int main(){
+    int n,s;
+    cin>>n>>s;
+    if(s==0 && n>1){
+        cout<<-1 <<" "<<-1;
+        return 0;
     }
+
+    if(n==1 && s>9){
+        cout<<-1<<" "<<-1;
+        return 0;
+    }
+
+    if(s==0 && n==1){
+        cout<<0<<" "<<0;
+        return 0;
+    }
+
+    string str="";
+    while(n--){
+        int st=9;
+        int dig=min(s,st);
+        str+=to_string(dig);
+        s=s-dig;
+    }
+    if(s>0){
+        cout<<-1<<" "<<-1;
+        return 0;
+    }
+    string t=str;
+    reverse(t.begin(),t.end());
+
+    if(t[0]=='0'){
+        int i=0;
+    while(t[i]=='0'){
+        i++;
+    }
+    t[0]='1';
+    t[i]=t[i]-1;
+    }
+
+    cout<<t<<" "<<str;
+
     return 0;
 }
